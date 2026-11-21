@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#173d32">
+  <meta name="description" content="A private, supportive companion for your smoke-free journey.">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="apple-touch-icon" href="icons/icon-192.png">
+  <link rel="stylesheet" href="styles.css">
+  <title>Unsmoke — Take back your next moment</title>
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <div class="brand"><span class="brand-mark">✳</span><span>unsmoke</span></div>
+      <button class="icon-button" id="settingsBtn" aria-label="Settings">⚙</button>
+    </header>
+
+    <main>
+      <section class="view active" id="homeView">
+        <div class="greeting">
+          <p class="eyebrow" id="todayLabel">YOUR NEXT MOMENT STARTS NOW</p>
+          <h1>One moment<br><em>at a time.</em></h1>
+          <p class="muted">You don't have to solve forever today. Just take care of this moment.</p>
+        </div>
+
+        <div class="streak-card">
+          <div>
+            <span class="small-label">YOUR SMOKE-FREE JOURNEY</span>
+            <div class="streak-number"><span id="daysCount">0</span><small>days</small></div>
+            <p class="card-note" id="streakMessage">Every smoke-free moment counts.</p>
+          </div>
+          <div class="streak-icon">🌱</div>
+        </div>
+
+        <button class="sos-button" id="sosBtn">
+          <span class="sos-icon">♡</span>
+          <span><b>I'm having a craving</b><small>Help me through the next 5 minutes</small></span>
+          <span class="arrow">›</span>
+        </button>
+
+        <div class="section-heading"><h2>Today's check-in</h2><span class="muted tiny">30 seconds</span></div>
+        <div class="checkin-card">
+          <p class="question">How are you feeling right now?</p>
+          <div class="mood-row" id="moodRow">
+            <button class="mood" data-mood="Calm"><span>😌</span><small>Calm</small></button>
+            <button class="mood" data-mood="Okay"><span>🙂</span><small>Okay</small></button>
+            <button class="mood" data-mood="Restless"><span>😣</span><small>Restless</small></button>
+            <button class="mood" data-mood="Stressed"><span>😰</span><small>Stressed</small></button>
+          </div>
+          <label class="field-label" for="cravingLevel">Craving intensity <strong id="cravingValue">0/10</strong></label>
+          <input id="cravingLevel" type="range" min="0" max="10" value="0">
+          <button class="primary-button full" id="saveCheckin">Save check-in</button>
+          <p class="tiny muted" id="checkinSaved" aria-live="polite"></p>
+        </div>
+
+        <div class="section-heading"><h2>Small wins</h2></div>
+        <div class="wins-grid">
+          <div class="win-card"><span>🫁</span><b id="cigarettesAvoided">—</b><small>cigarettes avoided*</small></div>
+          <div class="win-card"><span>📝</span><b id="loggedCount">0</b><small>moments logged</small></div>
+        </div>
+        <p class="tiny muted footnote">*Estimate based on your usual daily cigarette count and quit date. This is a motivational estimate, not a medical measurement.</p>
+      </section>
+
+      <section class="view" id="sosView">
+        <button class="back-button" data-back>← Back</button>
+        <div class="sos-content">
+          <div class="breath-orb" id="breathOrb"><span id="breathText">Pause</span></div>
+          <p class="eyebrow centered">CRAVING SOS</p>
+          <h1 class="centered">You can ride<br>this wave.</h1>
+          <p class="muted centered">A craving can feel urgent, but you don't have to act on it. Let's create a little space.</p>
+          <div class="timer-card">
+            <span class="small-label">YOUR 5-MINUTE PAUSE</span>
+            <div class="timer" id="timer">05:00</div>
+            <p class="muted tiny centered" id="sosPrompt">Put both feet on the floor. Let your shoulders soften.</p>
+            <button class="primary-button full" id="timerButton">Start 5-minute pause</button>
+          </div>
+          <div class="tip-card"><b>Try this now</b><p>Drink some water, change rooms, or take a short walk. Notice the urge without judging yourself.</p></div>
+          <button class="text-button full" id="logCraving">Log this craving</button>
+        </div>
+      </section>
+
+      <section class="view" id="logView">
+        <div class="page-heading"><p class="eyebrow">NOTICE YOUR PATTERNS</p><h1>Your journal</h1><p class="muted">Curiosity, not judgement. Each entry helps you understand your patterns.</p></div>
+        <div class="panel">
+          <h2>What happened?</h2>
+          <div class="choice-grid" id="triggerChoices">
+            <button class="choice" data-trigger="Stress">Stress</button>
+            <button class="choice" data-trigger="After a meal">After a meal</button>
+            <button class="choice" data-trigger="Tea / coffee">Tea / coffee</button>
+            <button class="choice" data-trigger="Boredom">Boredom</button>
+            <button class="choice" data-trigger="Social situation">Social situation</button>
+            <button class="choice" data-trigger="Other">Other</button>
+          </div>
+          <label class="field-label" for="entryNote">Anything you want to remember?</label>
+          <textarea id="entryNote" rows="3" placeholder="What were you doing? What might help next time?"></textarea>
+          <div class="button-row">
+            <button class="primary-button" id="saveCraving">I had a craving</button>
+            <button class="secondary-button" id="saveSlip">I smoked</button>
+          </div>
+          <p class="tiny muted" id="logFeedback" aria-live="polite"></p>
+        </div>
+        <div class="section-heading"><h2>Recent moments</h2><span class="tiny muted" id="entryCount">0 entries</span></div>
+        <div id="journalList" class="journal-list"><p class="muted tiny">Your entries will appear here.</p></div>
+      </section>
+
+      <section class="view" id="journeyView">
+        <div class="page-heading"><p class="eyebrow">YOUR PERSONAL PLAN</p><h1>Your journey</h1><p class="muted">A plan that can adapt as you learn what works for you.</p></div>
+        <div class="panel">
+          <h2>Your quit goal</h2>
+          <label class="field-label" for="quitDate">Quit date</label>
+          <input type="date" id="quitDate">
+          <label class="field-label" for="dailyCount">Usual cigarettes per day</label>
+          <input type="number" id="dailyCount" min="0" max="100" value="10" inputmode="numeric">
+          <label class="field-label" for="topTrigger">Your biggest trigger</label>
+          <select id="topTrigger">
+            <option>Stress</option><option>After a meal</option><option>Tea / coffee</option><option>Boredom</option><option>Social situation</option><option>Driving / commuting</option><option>Other</option>
+          </select>
+          <button class="primary-button full" id="savePlan">Save my plan</button>
+          <p class="tiny muted" id="planFeedback" aria-live="polite"></p>
+        </div>
+        <div class="panel soft-panel">
+          <h2>When it gets difficult</h2>
+          <p class="muted">Consider support from a trained tobacco-cessation professional. In India, the National Tobacco Quitline is <b>1800-11-2356</b>.</p>
+          <a class="call-link" href="tel:1800112356">Call the Quitline ↗</a>
+        </div>
+        <div class="panel">
+          <h2>A note about lapses</h2>
+          <p class="muted">If you smoke, it doesn't erase the effort you've made. Record what happened, learn from the trigger, and decide what you want to do next. You deserve support, not shame.</p>
+        </div>
+      </section>
+
+      <section class="view" id="settingsView">
+        <button class="back-button" data-back>← Back</button>
+        <div class="page-heading"><p class="eyebrow">YOUR APP</p><h1>Settings</h1></div>
+        <div class="panel">
+          <h2>Privacy</h2>
+          <p class="muted">Your journal and plan are stored on this device in this browser. This starter version does not send your entries to a server.</p>
+          <button class="secondary-button full" id="exportData">Export my data</button>
+          <button class="danger-button full" id="resetData">Delete all app data</button>
+          <p class="tiny muted" id="settingsFeedback"></p>
+        </div>
+        <div class="panel">
+          <h2>Important</h2>
+          <p class="muted">Unsmoke is a self-help companion, not a medical service. It does not diagnose, prescribe medication, or replace professional care. For help choosing evidence-based treatment, speak with a qualified healthcare professional.</p>
+        </div>
+        <p class="tiny muted centered">Unsmoke · Early personal-use prototype</p>
+      </section>
+    </main>
+
+    <nav class="tabbar" id="tabbar">
+      <button class="tab active" data-view="homeView"><span>⌂</span><small>Home</small></button>
+      <button class="tab" data-view="logView"><span>▤</span><small>Journal</small></button>
+      <button class="tab" data-view="journeyView"><span>✳</span><small>Journey</small></button>
+    </nav>
+  </div>
+  <script src="app.js"></script>
+</body>
+</html>
